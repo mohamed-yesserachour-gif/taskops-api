@@ -2,7 +2,6 @@ package com.formation.taskops.controller;
 
 import com.formation.taskops.model.Task;
 import com.formation.taskops.model.TaskStatus;
-import com.formation.taskops.service.CanaryService;
 import com.formation.taskops.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -32,11 +30,9 @@ import java.util.Map;
 public class TaskController {
 
     private final TaskService service;
-    private final CanaryService canary;
 
-    public TaskController(TaskService service, CanaryService canary) {
+    public TaskController(TaskService service) {
         this.service = service;
-        this.canary = canary;
     }
 
     /** GET /api/tasks           -> toutes les taches
@@ -79,32 +75,5 @@ public class TaskController {
     @GetMapping("/stats")
     public Map<TaskStatus, Long> stats() {
         return service.countByStatus();
-    }
-
-    /**
-     * GET /api/tasks/tri
-     * Deux implementations du tri cohabitent dans le MEME artefact.
-     * Le canari decide, appel par appel, laquelle sert la reponse.
-     */
-    @GetMapping("/tri")
-    public Map<String, Object> trier() {
-        boolean nouvelle = canary.utiliserNouvelleVersion();
-        List<Task> taches = service.findAll();
-
-        List<Task> triees = nouvelle
-                // v2 : tri par statut puis par titre
-                ? taches.stream()
-                        .sorted(Comparator.comparing(Task::getStatus)
-                                .thenComparing(Task::getTitle))
-                        .toList()
-                // v1 : tri historique, par identifiant
-                : taches.stream()
-                        .sorted(Comparator.comparing(Task::getId))
-                        .toList();
-
-        return Map.of(
-                "implementation", nouvelle ? "v2-tri-par-statut" : "v1-tri-par-id",
-                "canaryPourcentage", canary.getPourcentage(),
-                "taches", triees);
     }
 }

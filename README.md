@@ -1,7 +1,7 @@
 # TaskOps API
 
-[![CI](https://github.com/Djoubat/taskops-api/actions/workflows/ci.yml/badge.svg)](https://github.com/Djoubat/taskops-api/actions/workflows/ci.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Djoubat_taskops-api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Djoubat_taskops-api)
+[![CI](https://github.com/votre-pseudo/taskops-api/actions/workflows/ci.yml/badge.svg)](https://github.com/votre-pseudo/taskops-api/actions/workflows/ci.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=votre-pseudo_taskops-api&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=votre-pseudo_taskops-api)
 
 API REST de gestion de tâches — projet fil rouge de la formation
 **B3 - DevOps : culture, outils et automatisation**.
