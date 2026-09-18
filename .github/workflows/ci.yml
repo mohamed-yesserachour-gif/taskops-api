@@ -36,6 +36,8 @@ jobs:
           java-version: '25'
           distribution: 'temurin'
           cache: 'maven'
+      - name: Make mvnw executable
+        run: chmod +x mvnw
 
       # 3. Construire et tester.
       #    -B : mode batch (pas de couleurs ni de barres de progression, logs lisibles)
